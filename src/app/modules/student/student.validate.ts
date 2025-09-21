@@ -49,8 +49,7 @@ export const StudentSchema = z.object({
     .optional()
     .default([]),
   guardian: GuardianSchema,
-  isActive: z.boolean(),
-  // ডেটা কিভাবে আসছে তার উপর: যদি string হিসেবে আসে use z.coerce.date()
+
   createdAt: z.preprocess((arg) => {
     if (typeof arg === "string" || arg instanceof Date)
       return new Date(arg as any);

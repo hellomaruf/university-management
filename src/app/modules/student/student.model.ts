@@ -13,10 +13,15 @@ const GuardianSchema = new Schema<Guardian>(
   },
   { _id: false }
 );
-const hello = "maruf";
 const StudentSchema = new Schema<Student>({
   id: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, "userID is Required"],
+    unique: true,
+    ref: "UserModel",
+  },
+  password: { type: String },
   name: { type: String, required: true },
   age: { type: Number, required: true },
   gender: { type: String, enum: ["male", "female", "other"], required: true },
@@ -28,7 +33,6 @@ const StudentSchema = new Schema<Student>({
   gpa: { type: Number, min: 0, max: 4 },
   enrolledCourses: { type: [String], default: [] },
   guardian: { type: GuardianSchema, required: true },
-  isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   isDeleted: { type: Boolean, default: false },
 });

@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface Guardian {
   name: string;
   relation: string;
@@ -8,6 +10,7 @@ export interface Guardian {
 
 export interface Student {
   id: string;
+  user: Types.ObjectId;
   password: string;
   name: string;
   age: number;
@@ -20,7 +23,6 @@ export interface Student {
   gpa?: number;
   enrolledCourses: string[];
   guardian: Guardian;
-  isActive: boolean;
   createdAt: Date;
   isDeleted: false;
 }
