@@ -1,23 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import { studentService } from "./student.service";
 import { StudentSchema } from "./student.validate";
+import catchAsync from "../../utils/catchAsync";
 
-const getAllStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+const getAllStudent = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const allStudents = await studentService.getAllStudent();
     res.status(200).json({
       success: true,
       message: "Student get successfully!",
       data: allStudents,
     });
-  } catch (error) {
-    next(error);
   }
-};
+);
 
 const getAStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {

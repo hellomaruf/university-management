@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { UserService } from "./user.service";
 import { UserValidation } from "./user.validate";
+import catchAsync from "../../utils/catchAsync";
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
+const createUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
     const password = req.body.password;
     // const zodPerseData = UserValidation.userZodSchema.parse(data);
@@ -13,9 +14,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       message: "User Created Successfully!",
       data: result,
     });
-  } catch (error) {
-    next(error);
   }
-};
+);
 
 export const UserController = { createUser };
