@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { UserService } from "./user.service";
 import { UserValidation } from "./user.validate";
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
     const password = req.body.password;
@@ -14,12 +14,7 @@ const createUser = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Something Went Wrong!",
-      error: error,
-    });
+    next(error);
   }
 };
 

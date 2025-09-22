@@ -11,7 +11,6 @@ export interface Guardian {
 export interface Student {
   id: string;
   user: Types.ObjectId;
-  password: string;
   name: string;
   age: number;
   gender: "male" | "female" | "other";

@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { studentService } from "./student.service";
 import { StudentSchema } from "./student.validate";
 
-const getAllStudent = async (req: Request, res: Response) => {
+const getAllStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const allStudents = await studentService.getAllStudent();
     res.status(200).json({
@@ -11,11 +15,11 @@ const getAllStudent = async (req: Request, res: Response) => {
       data: allStudents,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
-const getAStudent = async (req: Request, res: Response) => {
+const getAStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const studentId = req.params.id;
     const student = await studentService.getAStudent(studentId);
@@ -25,11 +29,15 @@ const getAStudent = async (req: Request, res: Response) => {
       data: student,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
-const deleteStudent = async (req: Request, res: Response) => {
+const deleteStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const studentId = req.params.id;
     console.log(studentId);
@@ -41,11 +49,7 @@ const deleteStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: true,
-      message: "Something went wrong!",
-      error: error,
-    });
+    next(error);
   }
 };
 

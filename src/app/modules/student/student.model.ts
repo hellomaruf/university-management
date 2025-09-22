@@ -1,7 +1,5 @@
 import { Schema, model, connect } from "mongoose";
 import { Guardian, Student } from "./student.interface";
-import bcrypt from "bcrypt";
-import config from "../../config";
 
 const GuardianSchema = new Schema<Guardian>(
   {
@@ -21,7 +19,6 @@ const StudentSchema = new Schema<Student>({
     unique: true,
     ref: "UserModel",
   },
-  password: { type: String },
   name: { type: String, required: true },
   age: { type: Number, required: true },
   gender: { type: String, enum: ["male", "female", "other"], required: true },
@@ -37,28 +34,9 @@ const StudentSchema = new Schema<Student>({
   isDeleted: { type: Boolean, default: false },
 });
 
-// Middlewares-------->
-StudentSchema.pre("save", async function () {
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.BCRYPT_SOLT_ROUND)
-  );
-});
-
-StudentSchema.post("save", function (doc, next) {
-  doc.password = "";
-  next();
-});
-
 StudentSchema.pre("find", function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
-
-// Virtuals------->
-// StudentSchema.virtual('fullName').get(function(){
-//   return
-// })
 
 export const StudentModel = model<Student>("Student", StudentSchema);
