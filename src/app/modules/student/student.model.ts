@@ -12,7 +12,6 @@ const GuardianSchema = new Schema<Guardian>(
   { _id: false }
 );
 const StudentSchema = new Schema<Student>({
-  id: { type: String, required: true, unique: true },
   user: {
     type: Schema.Types.ObjectId,
     required: [true, "userID is Required"],
@@ -31,7 +30,6 @@ const StudentSchema = new Schema<Student>({
   enrolledCourses: { type: [String], default: [] },
   guardian: { type: GuardianSchema, required: true },
   createdAt: { type: Date, default: Date.now },
-  isDeleted: { type: Boolean, default: false },
 });
 
 StudentSchema.pre("find", function (next) {

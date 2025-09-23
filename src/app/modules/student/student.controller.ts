@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { studentService } from "./student.service";
-import { StudentSchema } from "./student.validate";
 import catchAsync from "../../utils/catchAsync";
 
 const getAllStudent = catchAsync(async (req: Request, res: Response) => {

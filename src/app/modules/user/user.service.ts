@@ -5,8 +5,6 @@ import { IUser } from "./user.interface";
 import { UserModel } from "./user.model";
 
 const createUser = async (password: string, studentdata: Student) => {
-  console.log(studentdata, password);
-
   const userData: Partial<IUser> = {};
   if (!password) {
     userData.password = config.DEFAULT_PASS as string;
