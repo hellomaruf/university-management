@@ -1,7 +1,7 @@
 import express from "express";
 import { UserController } from "./user.controller";
 import { StudentValidations } from "../student/student.validate";
-import { validateRequest } from "../../routes/validateRequest";
+import { validateRequest } from "../../middleware/validateRequest";
 const router = express.Router();
 
 router.post(
