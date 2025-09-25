@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { IAcademicSemester } from "./academicSemester.interface";
 import { AcademicSemesterModel } from "./academicSemester.model";
 const nameCodeMapper: Record<string, string> = {
@@ -5,6 +6,8 @@ const nameCodeMapper: Record<string, string> = {
   Summar: "02",
   Fall: "03",
 };
+
+// Create semester----->
 const createAcademicSemesterIntoDB = async (payload: IAcademicSemester) => {
   // Check name with wrong code ----->
   if (nameCodeMapper[payload.name] !== payload.code) {
@@ -17,12 +20,20 @@ const createAcademicSemesterIntoDB = async (payload: IAcademicSemester) => {
   return result;
 };
 
+// Get all semester------>
 const getAllSemester = async () => {
   const result = await AcademicSemesterModel.find();
+  return result;
+};
+
+// Get Single semester ------>
+const getASemester = async (id: string) => {
+  const result = await AcademicSemesterModel.findOne({ _id: new ObjectId(id) });
   return result;
 };
 
 export const AcademicSemesterService = {
   createAcademicSemesterIntoDB,
   getAllSemester,
+  getASemester,
 };
