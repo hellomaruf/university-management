@@ -1,6 +1,10 @@
 import { ObjectId } from "mongodb";
-import { IAcademicSemester } from "./academicSemester.interface";
+import {
+  IAcademicSemester,
+  IUpdateSemester,
+} from "./academicSemester.interface";
 import { AcademicSemesterModel } from "./academicSemester.model";
+
 const nameCodeMapper: Record<string, string> = {
   Autumn: "01",
   Summar: "02",
@@ -32,8 +36,17 @@ const getASemester = async (id: string) => {
   return result;
 };
 
+const updateASemester = async (id: string, payload: IUpdateSemester) => {
+  const result = await AcademicSemesterModel.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: payload }
+  );
+  return result;
+};
+
 export const AcademicSemesterService = {
   createAcademicSemesterIntoDB,
   getAllSemester,
   getASemester,
+  updateASemester,
 };

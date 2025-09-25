@@ -22,3 +22,5 @@ export interface IAcademicSemester {
   startMonth: IMonth;
   endMonth: IMonth;
 }
+
+export type IUpdateSemester = Partial<IAcademicSemester>;
