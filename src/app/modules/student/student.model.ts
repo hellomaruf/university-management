@@ -29,6 +29,7 @@ const StudentSchema = new Schema<Student>({
   gpa: { type: Number, min: 0, max: 4 },
   enrolledCourses: { type: [String], default: [] },
   guardian: { type: GuardianSchema, required: true },
+  admissionSemester: { type: Schema.Types.ObjectId, ref: "AcademicSemester" },
   createdAt: { type: Date, default: Date.now },
 });
 

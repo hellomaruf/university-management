@@ -35,10 +35,10 @@ const CreateStudentSchema = z.object({
     gpa: z.number().min(0).max(4).optional(),
     enrolledCourses: z.array(z.string().min(1)).optional().default([]),
     guardian: GuardianSchema,
-
+    admissionSemester: z.string(),
     createdAt: z.preprocess((arg) => {
       if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
-      return arg ?? new Date(); // ✅ default now
+      return arg ?? new Date();
     }, z.instanceof(Date)),
   }),
 });

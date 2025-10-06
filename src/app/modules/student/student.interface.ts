@@ -22,6 +22,7 @@ export interface Student {
   gpa?: number;
   enrolledCourses: string[];
   guardian: Guardian;
+  admissionSemester: Types.ObjectId;
   createdAt: Date;
   isDeleted: false;
 }
