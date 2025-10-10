@@ -1,22 +1,30 @@
 import { IAcademicSemester } from "../academicSemester/academicSemester.interface";
 import { UserModel } from "./user.model";
 
-// find last student id----->
-const findLastStudentId = async () => {
+// find last student id for a specific semester ----->
+const findLastStudentId = async (year: Date, code: string) => {
+  const yearNumber = year.getUTCFullYear();
+
+  const regexPattern = new RegExp(`^${yearNumber}${code}`);
+
   const lastStudent = await UserModel.findOne(
-    { role: "student" },
+    { role: "student", id: { $regex: regexPattern } },
     {},
-    { sort: { _id: -1 } }
+    { sort: { createdAt: -1 } }
   );
 
   return lastStudent?.id ? lastStudent.id.substring(6) : undefined;
 };
 
-// generate uniqe student id ----->
+// generate unique student id ----->
 export const generateStudentId = async (payload: IAcademicSemester) => {
-  const currentId = (await findLastStudentId()) || (0).toString();
-  let incrementId = (Number(currentId) + 1).toString().padStart(4, "0");
-  const year = new Date(payload.year).getFullYear();
-  incrementId = `${year}${payload.code}${incrementId}`;
-  return incrementId;
+  const yearNumber = payload.year.getUTCFullYear();
+
+  const currentId =
+    (await findLastStudentId(payload.year, payload.code)) || "0000";
+  const incrementId = (Number(currentId) + 1).toString().padStart(4, "0");
+
+  const newStudentId = `${yearNumber}${payload.code}${incrementId}`;
+
+  return newStudentId;
 };
