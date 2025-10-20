@@ -25,7 +25,20 @@ const getAllFaculty = catchAsync(
   }
 );
 
+const getAFaculty = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id: string = req.params.id;
+    const result = await AcademicFacultyService.getAFaculty(id);
+    res.status(200).json({
+      success: true,
+      message: "Get Single Faculty Successfully!",
+      data: result,
+    });
+  }
+);
+
 export const AcademicFacultyController = {
   createFaculty,
   getAllFaculty,
+  getAFaculty,
 };

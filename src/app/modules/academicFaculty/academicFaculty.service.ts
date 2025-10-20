@@ -11,7 +11,13 @@ const getAllFaculty = async () => {
   return result;
 };
 
+const getAFaculty = async (id: string) => {
+  const result = await AcademicFacultyModel.findOne({ _id: new Object(id) });
+  return result;
+};
+
 export const AcademicFacultyService = {
   createFaculty,
   getAllFaculty,
+  getAFaculty,
 };
